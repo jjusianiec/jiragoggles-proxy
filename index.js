@@ -4,6 +4,7 @@ var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
 var frontend = 'https://testjiragoggles-fronted.herokuapp.com';
 var backend = 'https://testjiragoggles-backend.herokuapp.com';
+var reverse = 'https://jiragoggles.herokuapp.com';
 
 
 var logger = function(req, res, next) {
@@ -20,9 +21,8 @@ app.all("/api/*", function(req, res) {
 
 app.all("/atlassian-connect.json", function (req, res) {
     console.log("redirect to backend");
-    console.log(req);
     req.headers.host = backend;
-    apiProxy.web(req, res, {target: backend});
+    apiProxy.web(req, res, {target: backend, host: backend});
 });
 
 app.all("/installed", function(req, res) {
