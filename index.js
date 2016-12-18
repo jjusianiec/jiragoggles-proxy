@@ -21,6 +21,7 @@ app.all("/api/*", function(req, res) {
 app.all("/atlassian-connect.json", function (req, res) {
     console.log("redirect to backend");
     console.log(req);
+    req.headers.host = backend;
     apiProxy.web(req, res, {target: backend});
 });
 
