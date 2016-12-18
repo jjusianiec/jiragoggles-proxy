@@ -2,9 +2,9 @@ var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'https://testjiragoggles-fronted.herokuapp.com';
-var backend = 'https://testjiragoggles-backend.herokuapp.com';
-var reverse = 'https://jiragoggles.herokuapp.com';
+var frontend = 'testjiragoggles-fronted.herokuapp.com';
+var backend = 'testjiragoggles-backend.herokuapp.com';
+var reverse = 'jiragoggles.herokuapp.com';
 
 
 var logger = function(req, res, next) {
@@ -16,11 +16,13 @@ app.use(logger);
 
 
 app.all("/", function (req, res) {
+    req.headers.host = backend;
     apiProxy.web(req, res, {target: backend});
 });
 
 app.all("/api/*", function(req, res) {
     console.log('redirecting to backend');
+    req.headers.host = backend;
     apiProxy.web(req, res, {target: backend});
 });
 
