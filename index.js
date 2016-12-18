@@ -6,7 +6,7 @@ var apiProxy = httpProxy.createProxyServer(
         '/atlassian-connect.json': { port: 80, host: backend }
     })).listen(process.env.PORT);
 var frontend = 'testjiragoggles-fronted.herokuapp.com';
-var backend = 'testjiragoggles-backend.herokuapp.com';
+var backend = 'https://testjiragoggles-backend.herokuapp.com';
 var reverse = 'jiragoggles.herokuapp.com';
 
 //
