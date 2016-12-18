@@ -15,7 +15,7 @@ var logger = function(req, res, next) {
 app.use(logger);
 
 
-app.all("/", function (req, rest) {
+app.all("/", function (req, res) {
     apiProxy.web(req, res, {target: backend});
 });
 
