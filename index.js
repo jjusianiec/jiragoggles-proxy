@@ -14,6 +14,11 @@ var logger = function(req, res, next) {
 
 app.use(logger);
 
+
+app.all("/", function (req, rest) {
+    apiProxy.web(req, res, {target: backend});
+});
+
 app.all("/api/*", function(req, res) {
     console.log('redirecting to backend');
     apiProxy.web(req, res, {target: backend});
@@ -21,7 +26,7 @@ app.all("/api/*", function(req, res) {
 
 app.all("/atlassian-connect.json", function (req, res) {
     console.log("redirect to backend");
-    req.headers.host = reverse;
+    req.headers.host = backend;
     apiProxy.web(req, res, {target: backend});
 });
 
