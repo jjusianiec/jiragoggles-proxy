@@ -2,8 +2,8 @@ var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'https://testjiragoggles-fronted.herokuapp.com';
-var backend = 'https://testjiragoggles-backend.herokuapp.com:80';
+var frontend = 'http://testjiragoggles-fronted.herokuapp.com';
+var backend = 'http://testjiragoggles-backend.herokuapp.com:80';
 var reverse = 'jiragoggles.herokuapp.com';
 
 
