@@ -40,4 +40,4 @@ app.all("/*", function(req, res) {
 
 
 console.log("Reverse proxy is up and running");
-app.listen(3000);
+app.listen(process.env.PORT);
