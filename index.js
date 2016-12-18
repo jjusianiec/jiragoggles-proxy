@@ -2,7 +2,7 @@ var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'http://testjiragoggles-fronted.herokuapp.com:80';
+var frontend = 'http://testjiragoggles-frontend.herokuapp.com:80';
 var backend = 'http://testjiragoggles-backend.herokuapp.com:80';
 var reverse = 'jiragoggles.herokuapp.com';
 
@@ -44,7 +44,7 @@ app.all("/main", function(req, res) {
 
 app.all("/*", function(req, res) {
     console.log('redirecting to fronted');
-    req.headers.host = 'testjiragoggles-fronted.herokuapp.com';
+    req.headers.host = 'testjiragoggles-frontend.herokuapp.com';
     apiProxy.web(req, res, {target: frontend});
 });
 
