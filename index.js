@@ -14,7 +14,7 @@ var logger = function(req, res, next) {
 
 app.use(logger);
 
-proxy.on('error', function(e) {
+apiProxy.on('error', function(e) {
     console.log(e);
 });
 
