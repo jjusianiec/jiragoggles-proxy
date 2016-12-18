@@ -1,0 +1,17 @@
+{
+  "name": "reverse-goggles",
+  "version": "0.0.1",
+  "description": "Reverse server for jira goggles app",
+  "main": "index.js",
+  "scripts": {
+	"start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jjusianiec",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "http-proxy": "^1.16.2",
+    "morgan": "^1.7.0"
+  }
+}
