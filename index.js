@@ -2,7 +2,7 @@ var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'testjiragoggles-fronted.herokuapp.com';
+var frontend = 'http://testjiragoggles-fronted.herokuapp.com';
 var backend = 'http://testjiragoggles-backend.herokuapp.com:80';
 var reverse = 'jiragoggles.herokuapp.com';
 
@@ -16,11 +16,6 @@ app.use(logger);
 
 apiProxy.on('error', function(e) {
     console.log(e);
-});
-
-app.all("/", function (req, res) {
-    req.headers.host = backend;
-    apiProxy.web(req, res, {target: backend});
 });
 
 app.all("/api/*", function(req, res) {
@@ -37,16 +32,19 @@ app.all("/atlassian-connect.json", function (req, res) {
 
 app.all("/installed", function(req, res) {
     console.log('redirecting to backend');
+    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
     apiProxy.web(req, res, {target: backend});
 });
 
 app.all("/main", function(req, res) {
     console.log('redirecting to backend');
+    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
     apiProxy.web(req, res, {target: backend});
 });
 
 app.all("/*", function(req, res) {
     console.log('redirecting to fronted');
+    req.headers.host = 'testjiragoggles-fronted.herokuapp.com';
     apiProxy.web(req, res, {target: frontend});
 });
 
