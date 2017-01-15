@@ -2,10 +2,20 @@ var express  = require('express');
 var app      = express();
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'http://testjiragoggles-frontend.herokuapp.com:80';
-var backend = 'http://testjiragoggles-backend.herokuapp.com:80';
-var reverse = 'jiragoggles.herokuapp.com';
+var frontend = 'http://' + process.env.FE_URL + ":80";
+var backend = 'http://' + process.env.BE_URL + ":80";
 
+var redirectBackend = function (req, res) {
+    console.log('redirecting to backend');
+    req.headers.host = process.env.BE_URL;
+    apiProxy.web(req, res, {target: backend});
+};
+
+var redirectFrontend = function (req, res) {
+    console.log('redirecting to fronted');
+    req.headers.host = process.env.FE_URL;
+    apiProxy.web(req, res, {target: frontend});
+};
 
 var logger = function(req, res, next) {
     console.log(req.method + " " + req.url);
@@ -19,33 +29,23 @@ apiProxy.on('error', function(e) {
 });
 
 app.all("/api/*", function(req, res) {
-    console.log('redirecting to backend');
-    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
-    apiProxy.web(req, res, {target: backend});
+    redirectBackend(req, res);
 });
 
 app.all("/atlassian-connect.json", function (req, res) {
-    console.log("redirect to backend");
-    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
-    apiProxy.web(req, res, {target: backend});
+    redirectBackend(req, res);
 });
 
 app.all("/installed", function(req, res) {
-    console.log('redirecting to backend');
-    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
-    apiProxy.web(req, res, {target: backend});
+    redirectBackend(req, res);
 });
 
 app.all("/main", function(req, res) {
-    console.log('redirecting to backend');
-    req.headers.host = 'testjiragoggles-backend.herokuapp.com';
-    apiProxy.web(req, res, {target: backend});
+    redirectBackend(req, res);
 });
 
 app.all("/*", function(req, res) {
-    console.log('redirecting to fronted');
-    req.headers.host = 'testjiragoggles-frontend.herokuapp.com';
-    apiProxy.web(req, res, {target: frontend});
+    redirectFrontend(req, res);
 });
 
 
